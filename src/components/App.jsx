@@ -1,0 +1,62 @@
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner';
+import { Container } from './App.styled';
+import { Layout } from './Layout/Layout';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+
+const HomePage = lazy(() => import('../views/HomePage.js'));
+const LogInPage = lazy(() => import('../views/LogInPage'));
+const RegisterPage = lazy(() => import('../views/RegisterPage'));
+const ContactsPage = lazy(() => import('components/ContactsPage'));
+const EditContact = lazy(() => import('components/EditContact/EditContact'));
+const NotFoundPage = lazy(() => import('../views/NotFound'));
+
+export default function App() {
+  return (
+    <Container>
+      <Suspense fallback={<Oval />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route
+              path="contacts"
+              element={
+                <PrivateRoute navTo="/login">
+                  <ContactsPage />
+                </PrivateRoute>
+              }
+            >
+              <Route path="contacts/edit" element={<EditContact />} />
+            </Route>
+            <Route
+              index
+              element={
+                <PublicRoute>
+                  <HomePage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="login"
+              element={
+                <PublicRoute restricted navTo="/contacts">
+                  <LogInPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="register"
+              element={
+                <PublicRoute restricted navTo="/">
+                  <RegisterPage />
+                </PublicRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </Container>
+  );
+}
