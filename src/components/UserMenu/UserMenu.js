@@ -6,7 +6,7 @@ import { Box, Ava, Name } from './UserMenu.styled';
 
 export default function UserMenu() {
   const [logOutUser] = useLogOutUserMutation();
-  const name = useSelector(state => state.auth.user.name);
+  const name = useSelector(state => state?.auth?.user.name);
   const avatar = defaultAva;
 
   return (

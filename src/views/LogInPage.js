@@ -40,9 +40,6 @@ const LogIn = () => {
         </button> */}
       </Input>
       <Submit type="submit">Log In</Submit>
-      {/* <Submit type="button" onClick={logOutUser} style={{ marginLeft: '20px' }}>
-        Log Out
-      </Submit> */}
     </form>
   );
 };

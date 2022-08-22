@@ -20,7 +20,6 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   margin-left: auto;
-  /* margin-right: 24px; */
   padding: 4px;
   border-radius: 10px;
   cursor: pointer;

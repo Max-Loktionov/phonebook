@@ -34,7 +34,7 @@ function ContactItem({ name, number, id }) {
         closeModal();
       }
     } catch (error) {
-      console.log(error);
+      console.log(stat.error);
     }
   };
 
@@ -95,7 +95,7 @@ function ContactItem({ name, number, id }) {
               />
             </Label>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? (
+              {stat.isLoading ? (
                 <Oval
                   ariaLabel="loading-indicator"
                   height={16}

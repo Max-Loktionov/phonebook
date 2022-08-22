@@ -5,9 +5,7 @@ import { Container } from './App.styled';
 import { Layout } from './Layout/Layout';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-// import { useDispatch } from 'react-redux';
-// import { useEffect } from 'react';
-// import { useGetUserQuery } from 'redux/user/userApi';
+import { useGetUserQuery } from 'redux/user/userApi';
 
 const HomePage = lazy(() => import('../views/HomePage.js'));
 const LogInPage = lazy(() => import('../views/LogInPage'));
@@ -16,11 +14,7 @@ const ContactsPage = lazy(() => import('components/ContactsPage'));
 const NotFoundPage = lazy(() => import('../views/NotFound'));
 
 export default function App() {
-  // const dispatch = useDispatch();
-  // const [getUser] = useGetUserQuery();
-  // useEffect(() => {
-  //   dispatch(getUser());
-  // });
+  useGetUserQuery();
 
   return (
     <Container>

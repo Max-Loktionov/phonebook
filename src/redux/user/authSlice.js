@@ -22,15 +22,15 @@ export const authSlice = createSlice({
         userApi.endpoints.logInUser.matchFulfilled,
         (state, { payload }) => {
           state.token = payload.token;
-          // state.user = payload.user;
           state.isLoggedIn = true;
+          state.user = payload;
         }
       )
       .addMatcher(
         userApi.endpoints.signUpUser.matchFulfilled,
         (state, { payload }) => {
           state.token = payload.token;
-          // state.user = payload.user;
+          state.user = payload;
           state.isLoggedIn = true;
         }
       )
@@ -42,9 +42,9 @@ export const authSlice = createSlice({
       .addMatcher(
         userApi.endpoints.getUser.matchFulfilled,
         (state, { payload }) => {
-          state.token = payload.token;
-          // state.user = null;
-          // state.isLoggedIn = false;
+          console.log(payload);
+          state.user = payload;
+          state.isLoggedIn = true;
         }
       );
   },
@@ -64,4 +64,3 @@ export const persistedReducer = persistReducer(
 export const { setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
-console.log(authSlice.actions.getUser);
