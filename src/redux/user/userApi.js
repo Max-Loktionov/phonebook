@@ -1,28 +1,61 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { setCredentials } from './authSlice';
 
 const BASE_URL = 'https://connections-api.herokuapp.com';
 
+const baseQuery = fetchBaseQuery({
+  baseUrl: BASE_URL,
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token;
+    // console.log(token);
+    // If we have a token set in state, let's assume that we should be passing it.
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
+// const baseQueryWithReauth = async (args, api, extraOptions) => {
+//   // console.log(authSlice);
+//   let result = await baseQuery(args, api, extraOptions);
+
+//   if (result.error && result.error.status === 401) {
+//     const refreshResult = await baseQuery('auth/refresh', api, extraOptions);
+//     // console.log(refreshResult.data);
+//     if (refreshResult.data) {
+//       // api.dispatch(getUser({ token: refreshResult.data }));
+
+//       // retry the initial query
+//       result = await baseQuery(args, api, extraOptions);
+//     } else {
+//       // api.dispatch(logOutUser());
+//     }
+//   }
+//   return result;
+// };
+// baseQueryWithReauth();
+
 export const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState(state => state).auth.token;
+  // baseQuery: fetchBaseQuery({
+  //   baseUrl: BASE_URL,
+  //   prepareHeaders: (headers, { getState }) => {
+  //     const token = getState(state => state).auth.token;
 
-      // If we have a token set in state, let's assume that we should be passing it.
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  //     // If we have a token set in state, let's assume that we should be passing it.
+  //     if (token) {
+  //       headers.set('authorization', `Bearer ${token}`);
+  //     }
+  //     return headers;
+  //   },
+  // }),
+  baseQuery,
 
   endpoints: builder => ({
-    // getUser: builder.query({
-    //   query: () => `/users/current`,
-    //   providesTags: ['Users'],
-    // }),
+    getUser: builder.query({
+      query: () => ({ url: `/users/current`, method: 'GET' }),
+      providesTags: ['Users'],
+    }),
 
     signUpUser: builder.mutation({
       query: newUser => ({
@@ -47,14 +80,21 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['Users'],
 
-      // async onQueryStarted(arg, { dispatch, getState, queryFulfilled }) {
-      //   try {
-      //     const data = await queryFulfilled;
-      //     const token = data.meta.request.headers;
+      // async onQueryStarted(
+      //   arg,
 
-      //     if (token) {
-      //       getState().dispatch(setCredentials(data.user));
-      //     }
+      //   { dispatch, getState, queryFulfilled },
+      //   extraOptions
+      // ) {
+      //   try {
+      //     // const data = await queryFulfilled;
+      //     // const token = data.meta.request.headers;
+      //     console.log('args:', arg);
+      //     // console.log('extraOptions:', extraOptions);
+      //     // console.log('api:', api);
+      //     // if (token) {
+      //     //   // getState().dispatch(setCredentials(data.user));
+      //     // }
       //   } catch (error) {}
       // },
     }),
@@ -66,6 +106,10 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
+    // fetchCurrentUser: builder.query({
+    //   query: () => `/users/current`,
+    //   providesTags: ['Users'],
+    // }),
   }),
 });
 

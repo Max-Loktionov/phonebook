@@ -5,10 +5,10 @@ import { useLogInUserMutation } from 'redux/user/userApi';
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [logInUser, { isSuccess }] = useLogInUserMutation();
+  const [logInUser] = useLogInUserMutation();
 
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
+  // const [show, setShow] = useState(false);
+  // const handleClick = () => setShow(!show);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -16,7 +16,7 @@ const LogIn = () => {
     setEmail('');
     setPassword('');
   };
-  console.log();
+
   return (
     <form onSubmit={handleSubmit}>
       <Input
@@ -28,7 +28,7 @@ const LogIn = () => {
         required
       />
       <Input
-        type={show ? 'text' : 'password'}
+        type={'password'}
         value={password}
         onChange={e => setPassword(e.target.value)}
         placeholder="password"

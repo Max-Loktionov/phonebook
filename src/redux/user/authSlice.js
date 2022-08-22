@@ -22,7 +22,7 @@ export const authSlice = createSlice({
         userApi.endpoints.logInUser.matchFulfilled,
         (state, { payload }) => {
           state.token = payload.token;
-          state.user = payload.user;
+          // state.user = payload.user;
           state.isLoggedIn = true;
         }
       )
@@ -30,16 +30,21 @@ export const authSlice = createSlice({
         userApi.endpoints.signUpUser.matchFulfilled,
         (state, { payload }) => {
           state.token = payload.token;
-          state.user = payload.user;
+          // state.user = payload.user;
           state.isLoggedIn = true;
         }
       )
+      .addMatcher(userApi.endpoints.logOutUser.matchFulfilled, (state, _) => {
+        state.token = null;
+        state.user = null;
+        state.isLoggedIn = false;
+      })
       .addMatcher(
-        userApi.endpoints.logOutUser.matchFulfilled,
+        userApi.endpoints.getUser.matchFulfilled,
         (state, { payload }) => {
-          state.token = null;
-          state.user = null;
-          state.isLoggedIn = false;
+          state.token = payload.token;
+          // state.user = null;
+          // state.isLoggedIn = false;
         }
       );
   },
@@ -59,3 +64,4 @@ export const persistedReducer = persistReducer(
 export const { setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
+console.log(authSlice.actions.getUser);
