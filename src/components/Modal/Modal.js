@@ -26,7 +26,7 @@ const Modal = ({ children, onClose }) => {
       <Box>
         <div>{children}</div>
         <ButtonClose type="button" onClick={onClose}>
-          Close
+          Cancel
         </ButtonClose>
       </Box>
     </Overlay>,

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { useSignUpUserMutation } from 'redux/user/userApi';
 import { Input, Submit } from 'components/ContactsBook/Phonebook.styled';
 
@@ -8,13 +9,21 @@ const RegisterView = () => {
   const [name, setName] = useState('');
   const [signUpUser] = useSignUpUserMutation();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-
-    signUpUser({ name, email, password });
-    setEmail('');
-    setPassword('');
-    setName('');
+    try {
+      signUpUser({ name, email, password }).then(resp => {
+        resp?.error &&
+          Notify.failure(
+            ` Sorry, try one more time. ${resp.error.data.message} `,
+            { timeout: 8000, fontSize: '18px' }
+          );
+        console.log(resp.error);
+      });
+    } catch (error) {
+      Notify.failure(` Something goes wrong: ${error}`);
+      console.log(error);
+    }
   };
 
   return (

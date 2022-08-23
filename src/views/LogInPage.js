@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Input, Submit } from 'components/ContactsBook/Phonebook.styled';
 import { useLogInUserMutation } from 'redux/user/userApi';
 
@@ -7,14 +8,23 @@ const LogIn = () => {
   const [password, setPassword] = useState('');
   const [logInUser] = useLogInUserMutation();
 
-  // const [show, setShow] = useState(false);
-  // const handleClick = () => setShow(!show);
-
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    logInUser({ email, password });
-    setEmail('');
-    setPassword('');
+    try {
+      await logInUser({ email, password }).then(resp => {
+        resp?.error &&
+          Notify.failure(
+            `Error ${resp.error.status} - wrong email or password`,
+            {
+              timeout: 5000,
+              fontSize: '18px',
+            }
+          );
+      });
+    } catch (error) {
+      Notify.failure(` Something goes wrong: ${error}`);
+      console.log(error);
+    }
   };
 
   return (
@@ -34,11 +44,7 @@ const LogIn = () => {
         placeholder="password"
         autoComplete="off"
         required
-      >
-        {/* <button type="button" onClick={handleClick}>
-          {show ? 'Hide' : 'Show'}
-        </button> */}
-      </Input>
+      ></Input>
       <Submit type="submit">Log In</Submit>
     </form>
   );
