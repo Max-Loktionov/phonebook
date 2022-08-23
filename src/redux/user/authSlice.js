@@ -15,7 +15,6 @@ const initialState = {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
   extraReducers: builder => {
     builder
       .addMatcher(
@@ -23,14 +22,14 @@ export const authSlice = createSlice({
         (state, { payload }) => {
           state.token = payload.token;
           state.isLoggedIn = true;
-          state.user = payload;
+          state.user = payload.user;
         }
       )
       .addMatcher(
         userApi.endpoints.signUpUser.matchFulfilled,
         (state, { payload }) => {
           state.token = payload.token;
-          state.user = payload;
+          state.user = payload.user;
           state.isLoggedIn = true;
         }
       )
@@ -42,8 +41,8 @@ export const authSlice = createSlice({
       .addMatcher(
         userApi.endpoints.getUser.matchFulfilled,
         (state, { payload }) => {
-          console.log(payload);
-          state.user = payload;
+          state.user.name = payload.name;
+          state.user.email = payload.email;
           state.isLoggedIn = true;
         }
       );

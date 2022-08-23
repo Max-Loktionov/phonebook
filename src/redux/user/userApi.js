@@ -22,7 +22,7 @@ export const userApi = createApi({
 
   endpoints: builder => ({
     getUser: builder.query({
-      query: () => '/current',
+      query: user => '/current',
     }),
 
     signUpUser: builder.mutation({
@@ -42,6 +42,7 @@ export const userApi = createApi({
         url: '/login',
         method: 'POST',
         body: {
+          name: user.name,
           email: user.email,
           password: user.password,
         },
