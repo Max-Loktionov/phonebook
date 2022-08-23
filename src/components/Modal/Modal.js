@@ -5,7 +5,7 @@ const modalRoot = document.querySelector('#modal-root');
 
 const Modal = ({ children, onClose }) => {
   return createPortal(
-    <Overlay onClick={onBackdrop}>
+    <Overlay>
       <Box>
         <div>{children}</div>
         <ButtonClose type="button" onClick={onClose}>
