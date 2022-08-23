@@ -18,7 +18,6 @@ const RegisterView = () => {
             ` Sorry, try one more time. ${resp.error.data.message} `,
             { timeout: 8000, fontSize: '18px' }
           );
-        console.log(resp.error);
       });
     } catch (error) {
       Notify.failure(` Something goes wrong: ${error}`);

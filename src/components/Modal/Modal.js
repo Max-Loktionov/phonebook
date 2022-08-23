@@ -1,5 +1,4 @@
 import { createPortal } from 'react-dom';
-import { useEffect } from 'react';
 import { Overlay, Box, ButtonClose } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
