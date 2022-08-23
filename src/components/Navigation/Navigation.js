@@ -9,7 +9,7 @@ const Navigation = () => {
         Home
       </NAVLink>
 
-      {isLoggedIn && <NAVLink to="contacts"> Contacts </NAVLink>}
+      {isLoggedIn && <NAVLink to="/contacts"> Contacts </NAVLink>}
     </nav>
   );
 };
