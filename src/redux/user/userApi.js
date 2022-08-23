@@ -18,6 +18,7 @@ export const userApi = createApi({
   reducerPath: 'userApi',
 
   baseQuery,
+  tagTypes: ['Users'],
 
   endpoints: builder => ({
     getUser: builder.query({
