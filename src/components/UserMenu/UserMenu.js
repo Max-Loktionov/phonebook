@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useLogOutUserMutation } from 'redux/user/userApi';
-import { Submit } from 'components/ContactsBook/Phonebook.styled';
+import { Submit } from 'components/ContactsBook/ContactsBook.styled';
 import defaultAva from './ava.png';
 import { Box, Ava, Name } from './UserMenu.styled';
 

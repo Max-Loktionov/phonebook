@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { useSignUpUserMutation } from 'redux/user/userApi';
-import { Input, Submit } from 'components/ContactsBook/Phonebook.styled';
+import { Input, Submit } from 'components/ContactsBook/ContactsBook.styled';
 
 const RegisterView = () => {
   const [email, setEmail] = useState('');

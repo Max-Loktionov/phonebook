@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Input, Submit } from 'components/ContactsBook/Phonebook.styled';
+import { Input, Submit } from 'components/ContactsBook/ContactsBook.styled';
 import { useLogInUserMutation } from 'redux/user/userApi';
 
 const LogIn = () => {

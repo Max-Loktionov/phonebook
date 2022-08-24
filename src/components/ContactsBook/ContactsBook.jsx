@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useGetContactsQuery, useAddContactMutation } from 'redux/contactsApi';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Oval } from 'react-loader-spinner';
-import { Label, Input, Submit } from './Phonebook.styled';
+import { Label, Input, Submit } from './ContactsBook.styled';
 
 export default function Phonebook() {
   const { data } = useGetContactsQuery();

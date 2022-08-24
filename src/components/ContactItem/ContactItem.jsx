@@ -5,6 +5,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import {
   useDeleteContactMutation,
   useUpdateContactMutation,
+  useGetContactsQuery,
 } from 'redux/contactsApi';
 import Modal from 'components/Modal';
 import { Form, Button, Item, Label, Input } from './ContactItem.styled';
@@ -15,6 +16,7 @@ function ContactItem({ name, number, id }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newName, setNewName] = useState(name);
   const [newNumber, setNewNumber] = useState(number);
+  const { data } = useGetContactsQuery();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -23,6 +25,15 @@ function ContactItem({ name, number, id }) {
     e.preventDefault();
 
     try {
+      if (
+        data?.find(
+          contact => contact.name.toLowerCase() === newName.toLowerCase()
+        )
+      ) {
+        Notify.failure(`${newName} is already in contacts`);
+        return;
+      }
+
       const contact = {
         name: newName,
         number: newNumber,
