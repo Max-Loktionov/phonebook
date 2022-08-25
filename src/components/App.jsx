@@ -5,7 +5,7 @@ import { Container } from './App.styled';
 import { Layout } from './Layout/Layout';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-import { useGetUserQuery } from 'redux/user/userApi';
+// import { useGetUserQuery } from 'redux/user/userApi';
 
 const HomePage = lazy(() => import('../views/HomePage.js'));
 const LogInPage = lazy(() => import('../views/LogInPage'));
@@ -14,7 +14,7 @@ const ContactsPage = lazy(() => import('components/ContactsPage'));
 const NotFoundPage = lazy(() => import('../views/NotFound'));
 
 export default function App() {
-  useGetUserQuery();
+  // useGetUserQuery();
 
   return (
     <Container>
