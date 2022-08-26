@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 export const Layout = () => {
   const { token } = useSelector(state => state.auth);
-  console.log(token);
   useGetUserQuery(undefined, {
     skip: !token,
   });
