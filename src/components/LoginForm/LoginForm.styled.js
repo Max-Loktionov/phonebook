@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 export const Form = styled.form`
+  display: grid;
+  grid-gap: 36px;
   background-color: #6c696ca1;
   border: none;
   border-radius: calc(0.5 * 44px);
   height: 100%;
   padding: 36px;
-
   box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
     rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
     rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
@@ -38,8 +39,8 @@ export const ButtonEye = styled.button`
 
 export const InputWrapper = styled.div`
   position: relative;
-  height: 100%;
-  margin: 24px 0;
+  display: flex;
+  align-items: center;
 `;
 
 export const Button = styled.button`

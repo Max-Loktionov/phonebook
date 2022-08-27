@@ -1,36 +1,34 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { useLogInUserMutation } from 'redux/user/userApi';
+import { useSignUpUserMutation } from 'redux/user/userApi';
 import {
   Form,
   Input,
   ButtonEye,
   InputWrapper,
   Button,
-} from './LoginForm.styled.js';
+} from '../LoginForm/LoginForm.styled';
 import hidden from 'img/eye-off.svg';
 import view from 'img/eye.svg';
 
-export default function LoginForm() {
+function RegisterForm() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(true);
   const onMouseUp = () => setShow(false);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [logInUser, { isLoading }] = useLogInUserMutation();
+  const [name, setName] = useState('');
+  const [signUpUser] = useSignUpUserMutation();
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await logInUser({ email, password }).then(resp => {
+      signUpUser({ name, email, password }).then(resp => {
         resp?.error &&
           Notify.failure(
-            `Error ${resp.error.status} - wrong email or password`,
-            {
-              timeout: 5000,
-              fontSize: '18px',
-            }
+            ` Sorry, try one more time. ${resp.error.data.message} `,
+            { timeout: 8000, fontSize: '18px' }
           );
       });
     } catch (error) {
@@ -41,15 +39,33 @@ export default function LoginForm() {
 
   return (
     <div>
+      <h1>Register Page</h1>
       <Form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="email"
-          autoComplete="off"
-          required
-        />
+        <InputWrapper>
+          <Input
+            value={name}
+            onChange={e => setName(e.target.value)}
+            type="text"
+            name="name"
+            placeholder="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            autoComplete="off"
+            required
+          />
+        </InputWrapper>
+
+        <InputWrapper>
+          <Input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="email"
+            autoComplete="off"
+            required
+          />
+        </InputWrapper>
+
         <InputWrapper>
           <Input
             type={show ? 'text' : 'password'}
@@ -69,10 +85,11 @@ export default function LoginForm() {
             <img src={show ? view : hidden} alt="button view/hidden password" />
           </ButtonEye>
         </InputWrapper>
-        <Button type="submit" disabled={isLoading}>
-          Log in
-        </Button>
+
+        <Button type="submit">Register</Button>
       </Form>
     </div>
   );
 }
+
+export default RegisterForm;
