@@ -5,6 +5,7 @@ import Phonebook from '../ContactsBook';
 import ContactsList from 'components/ContactsList';
 import Filter from '../Filter';
 import { getFiltred } from 'redux/filterSlice';
+import { ContactsP } from './ContactsPage.styled';
 
 const ContactsPage = () => {
   const { data } = useGetContactsQuery();
@@ -22,7 +23,7 @@ const ContactsPage = () => {
   };
 
   return (
-    <div>
+    <ContactsP>
       <Section title="Phonebook">
         <Phonebook />
       </Section>
@@ -36,7 +37,7 @@ const ContactsPage = () => {
           )}
         </Section>
       )}
-    </div>
+    </ContactsP>
   );
 };
 

@@ -13,6 +13,8 @@ export const Header = styled.div`
   width: 1200px;
   padding: 8px 0;
   margin-bottom: 16px;
+  border-radius: 4px;
+  background-color: #6c696c7a;
   box-shadow: rgb(6 24 44 / 40%) -1px 2px 0px -1px,
     rgb(6 24 44 / 65%) 0px 1px 2px -1px, rgb(255 255 255 / 8%) 0px 1px 0px inset;
 `;
@@ -23,6 +25,7 @@ export const NAVLink = styled(NavLink)`
   text-decoration: none;
   color: black;
   font-weight: 500;
+  margin-right: 24px;
 
   &.active {
     color: white;
