@@ -1,4 +1,4 @@
-# goit-react-hw-08
+# Phonebook
 
 React homework template Этот проект был создан при помощи Create React App. Для
 знакомства и настройки дополнительных возможностей обратись к документации.

@@ -9,6 +9,7 @@ export const Container = styled.div`
 
   font-size: 20px;
   color: #010101;
+  height: 100vh;
   background-image: linear-gradient(
       to right,
       rgba(27, 38, 38, 0.8),
