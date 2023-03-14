@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { useSignUpUserMutation } from 'redux/user/userApi';
-import {
-  Form,
-  Input,
-  ButtonEye,
-  InputWrapper,
-  Button,
-} from '../LoginForm/LoginForm.styled';
+import { Form, Input, ButtonEye, InputWrapper, Button } from '../LoginForm/LoginForm.styled';
 import hidden from 'img/eye-off.svg';
 import view from 'img/eye.svg';
 
@@ -24,13 +18,10 @@ function RegisterForm() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      signUpUser({ name, email, password }).then(resp => {
-        resp?.error &&
-          Notify.failure(
-            ` Sorry, try one more time. ${resp.error.data.message} `,
-            { timeout: 8000, fontSize: '18px' }
-          );
-      });
+      const signupResponse = await signUpUser({ name, email, password });
+
+      signupResponse?.error &&
+        Notify.failure(` Sorry, try one more time. ${signupResponse.error.data.message} `, { timeout: 8000, fontSize: '18px' });
     } catch (error) {
       Notify.failure(` Something goes wrong: ${error}`);
       console.log(error);
@@ -56,14 +47,7 @@ function RegisterForm() {
         </InputWrapper>
 
         <InputWrapper>
-          <Input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="email"
-            autoComplete="off"
-            required
-          />
+          <Input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="email" autoComplete="off" required />
         </InputWrapper>
 
         <InputWrapper>
@@ -76,12 +60,7 @@ function RegisterForm() {
             required
           />
 
-          <ButtonEye
-            type="button"
-            name="show"
-            onMouseDown={handleClick}
-            onMouseUp={onMouseUp}
-          >
+          <ButtonEye type="button" name="show" onMouseDown={handleClick} onMouseUp={onMouseUp}>
             <img src={show ? view : hidden} alt="button view/hidden password" />
           </ButtonEye>
         </InputWrapper>

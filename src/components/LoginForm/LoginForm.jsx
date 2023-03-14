@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { useLogInUserMutation } from 'redux/user/userApi';
-import {
-  Form,
-  Input,
-  ButtonEye,
-  InputWrapper,
-  Button,
-} from './LoginForm.styled.js';
+import { Form, Input, ButtonEye, InputWrapper, Button } from './LoginForm.styled.js';
 import hidden from 'img/eye-off.svg';
 import view from 'img/eye.svg';
 
@@ -23,16 +17,10 @@ export default function LoginForm() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await logInUser({ email, password }).then(resp => {
-        resp?.error &&
-          Notify.failure(
-            `Error ${resp.error.status} - wrong email or password`,
-            {
-              timeout: 5000,
-              fontSize: '18px',
-            }
-          );
-      });
+      const loginResponse = await logInUser({ email, password });
+
+      loginResponse?.error &&
+        Notify.failure(`Error ${loginResponse.error.status} - wrong email or password`, { timeout: 5000, fontSize: '18px' });
     } catch (error) {
       Notify.failure(` Something goes wrong: ${error}`);
       console.log(error);
@@ -42,14 +30,7 @@ export default function LoginForm() {
   return (
     <div>
       <Form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="email"
-          autoComplete="off"
-          required
-        />
+        <Input type="text" value={email} onChange={e => setEmail(e.target.value)} placeholder="email" autoComplete="off" required />
         <InputWrapper>
           <Input
             type={show ? 'text' : 'password'}
@@ -60,12 +41,7 @@ export default function LoginForm() {
             required
           />
 
-          <ButtonEye
-            type="button"
-            name="show"
-            onMouseDown={handleClick}
-            onMouseUp={onMouseUp}
-          >
+          <ButtonEye type="button" name="show" onMouseDown={handleClick} onMouseUp={onMouseUp}>
             <img src={show ? view : hidden} alt="button view/hidden password" />
           </ButtonEye>
         </InputWrapper>
