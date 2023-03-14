@@ -14,27 +14,29 @@ export default function Phonebook() {
     setNumber('');
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    if (
-      data?.find(contact => contact.name.toLowerCase() === name.toLowerCase())
-    ) {
-      Notify.failure(`${name} is already in contacts`);
-      return;
-    } else if (data?.find(contact => contact.number === number)) {
-      Notify.failure(
-        `this number: ${number} is in, you dont want to add one more time.`
-      );
-      return;
-    } else {
-      const contact = {
-        name: name,
-        number: number,
-      };
-      createContact(contact);
-      Notify.success(`${name} has added to contacts successfully`);
-      reset();
+    try {
+      if (data?.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+        Notify.failure(`${name} is already in contacts`);
+        return;
+      } else if (data?.find(contact => contact.number === number)) {
+        Notify.failure(`this number: ${number} is in, you dont want to add one more time.`);
+        return;
+      } else {
+        const contact = {
+          name: name,
+          number: number,
+        };
+        const contactResponse = await createContact(contact);
+
+        contactResponse?.error && Notify.failure(`Error ${contactResponse.error.status} - wrong data`, { timeout: 5000, fontSize: '18px' });
+        Notify.success(`${name} has added to contacts successfully`);
+        reset();
+      }
+    } catch (error) {
+      Notify.failure(` Something goes wrong: ${error}`);
     }
   };
 
